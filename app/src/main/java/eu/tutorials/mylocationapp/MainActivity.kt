@@ -23,30 +23,35 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.app.ActivityCompat
+import androidx.lifecycle.viewmodel.compose.viewModel
 import eu.tutorials.mylocationapp.ui.theme.MyLocationAppTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            val viewModel: LocationViewModel = viewModel()
             MyLocationAppTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    LocationDisplay(locationUtils = LocationUtils(this),  context = this)
-                }
+                    LocationDisplay(locationUtils = LocationUtils(this), viewModel, context = this)                }
             }
         }
     }
 }
 
+
+
 @Composable
 fun LocationDisplay(
     locationUtils: LocationUtils,
-    context: Context
-) {
+    viewModel: LocationViewModel,
+    context: Context) {
+
+    val location = viewModel.location.value
 
 
 
@@ -56,7 +61,7 @@ fun LocationDisplay(
             if(permissions[Manifest.permission.ACCESS_FINE_LOCATION] == true
                 && permissions[Manifest.permission.ACCESS_COARSE_LOCATION] == true){
 
-                // I have access to location
+                locationUtils.requestLocationUpdates(viewModel = viewModel)
             }
             else{
                 val rationaleRequired = ActivityCompat.shouldShowRequestPermissionRationale(
@@ -83,12 +88,19 @@ fun LocationDisplay(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
+        if(location!=null)
+        {
+            Text(text = "Latitude: ${location.latitude}")
+            Text(text = "Longitude: ${location.longitude}")
+        }else{
+            Text(text = "Location not available")
+        }
 
-        Text(text = "Location not available")
+
         Button(onClick = {
             if (locationUtils.hasLocationPermission(context)) {
                 // Permission already granted update the location
-
+                locationUtils.requestLocationUpdates(viewModel = viewModel)
             } else {
                 requestPermissionLauncher.launch(
                     arrayOf(
