@@ -37,7 +37,8 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    LocationDisplay(locationUtils = LocationUtils(this), viewModel, context = this)                }
+                    LocationDisplay(locationUtils = LocationUtils(this), viewModel, context = this)
+                }
             }
         }
     }
@@ -52,7 +53,9 @@ fun LocationDisplay(
     context: Context) {
 
     val location = viewModel.location.value
-
+    val address = location?.let{
+        locationUtils.reverseGeocodeLocation(location)
+    }
 
 
     val requestPermissionLauncher = rememberLauncherForActivityResult(
@@ -92,6 +95,7 @@ fun LocationDisplay(
         {
             Text(text = "Latitude: ${location.latitude}")
             Text(text = "Longitude: ${location.longitude}")
+            Text(text = "Address: $address")
         }else{
             Text(text = "Location not available")
         }
