@@ -3,6 +3,7 @@ package eu.tutorials.mylocationapp
 import android.Manifest
 import android.content.Context
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
@@ -21,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.app.ActivityCompat
 import eu.tutorials.mylocationapp.ui.theme.MyLocationAppTheme
 
 class MainActivity : ComponentActivity() {
@@ -57,7 +59,19 @@ fun LocationDisplay(
                 // I have access to location
             }
             else{
-                // ask for permission
+                val rationaleRequired = ActivityCompat.shouldShowRequestPermissionRationale(
+                    context as MainActivity,
+                    Manifest.permission.ACCESS_FINE_LOCATION) || ActivityCompat.shouldShowRequestPermissionRationale(
+                    context as MainActivity,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                )
+
+                if(rationaleRequired){
+                    Toast.makeText(context, "Location is required for this feature.", Toast.LENGTH_SHORT).show()
+                }
+                else {
+                    Toast.makeText(context, "Please go to settings to enable location permissions.", Toast.LENGTH_SHORT).show()
+                }
             }
 
         })
@@ -76,7 +90,12 @@ fun LocationDisplay(
                 // Permission already granted update the location
 
             } else {
-                // request location permission
+                requestPermissionLauncher.launch(
+                    arrayOf(
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                    )
+                )
             }
         }) {
             Text(text = "Get Location")
