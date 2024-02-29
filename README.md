@@ -12,7 +12,9 @@ My GeoLocation Application is a simple Android application that allows users to 
 ## Screenshots
 
 <!-- Include screenshots or GIFs of your app here to give users a visual representation of what your app looks like. -->
-<img src="https://github.com/nishkarsh25/MyLocationApp/blob/main/Screenshots/ss1.png" alt="Screenshot 1" width="300"><img src="https://github.com/nishkarsh25/MyLocationApp/blob/main/Screenshots/ss2.png" alt="Screenshot 2" width="300"> <img src="https://github.com/nishkarsh25/MyLocationApp/blob/main/Screenshots/ss3.png" alt="Screenshot 3" width="300"> 
+<img src="https://github.com/nishkarsh25/MyLocationApp/blob/main/Screenshots/ss1.png" alt="Screenshot 1" width="300"> &nbsp; &nbsp; <img src="https://github.com/nishkarsh25/MyLocationApp/blob/main/Screenshots/ss2.png" alt="Screenshot 2" width="300">
+
+<img src="https://github.com/nishkarsh25/MyLocationApp/blob/main/Screenshots/ss3.png" alt="Screenshot 3" width="300"> 
 
 # GIF's
 <img src="https://github.com/nishkarsh25/MyLocationApp/blob/main/Screenshots/ss4.gif" alt="Screenshot 4" width="800">
